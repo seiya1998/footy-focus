@@ -9,7 +9,7 @@
   "engines": {
     "npm": "use pnpm!",
     "yarn": "use pnpm!",
-    "pnpm": ">=9.1.0",
+    "pnpm": ">=9.9.0",
     "node": ">=20.0.0"
   },
   "keywords": [],
