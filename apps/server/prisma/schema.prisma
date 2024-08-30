@@ -1,0 +1,17 @@
+// generateコマンドで生成するものを指定
+generator client {
+  provider = "prisma-client-js"
+}
+
+// データベースの接続情報
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// モデル
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+}

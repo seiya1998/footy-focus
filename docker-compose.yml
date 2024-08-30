@@ -5,7 +5,7 @@ services:
     container_name: fastify-server
     build:
       context: .
-      dockerfile: .apps/server/Dockerfile
+      dockerfile: ./apps/server/Dockerfile
     environment:
       - DATABASE_URL=mysql://root:mypassword@mysql-server:3306/mydb
     depends_on:
@@ -35,19 +35,6 @@ services:
     networks:
       - local-net
     platform: linux/arm64
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    links:
-      - mysql:mysql
-    ports:
-      - 8888:80
-    environment:
-      PMA_USER: testuser
-      PMA_PASSWORD: mypassword
-      PMA_HOST: mysql
-    networks:
-      - local-net
 
 networks:
   local-net:
