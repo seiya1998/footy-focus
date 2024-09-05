@@ -9,9 +9,314 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// モデル
-model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
+// 性別
+enum Gender {
+  MELE // 男性
+  FEMALE // 女性
+  OTHER // その他
+
+  @@map("GENDER")
+}
+
+// R_ユーザーテーブル
+model RUser {
+  id          String  @id @default(cuid())
+  email       String  @unique
+  password    String
+  firstName   String  @map("first_name")
+  lastName    String  @map("last_name")
+  gender      Gender
+  age         Int
+
+  // Relation
+  createdUser         EUserCreate?
+  updatedUser         EUserUpdate[]
+  deletedUser         EUserDelete?
+  eCompetitionFollow  ECompetitionFollow[]
+  eTeamFollow         ETeamFollow[]
+  ePlayerFollow       EPlayerFollow[]
+
+  @@map("r_user")
+}
+
+// R_国テーブル
+model RCountry {
+  id            Int      @id @default(autoincrement())
+  name          String   
+  japanaseName  String   @map("japanese_name")
+  code          String   
+  flag_url      String   @map("flag_url")
+
+  // Relation
+  rCity         RCity[]
+  rVenue        RVenue[]
+  rTeam         RTeam[]
+  rCompetition  RCompetition[]
+  rPlayer       RPlayer[]
+
+  @@map("r_country")
+}
+
+// R_市町村テーブル
+model RCity {
+  id            Int      @id @default(autoincrement())
+  countryId     Int      @map("country_id")
+  name          String   
+  japanaseName  String   @map("japanese_name")
+
+  // Relation
+  rCountry  RCountry @relation(fields: [countryId], references: [id])
+  rVenue    RVenue[]
+
+  @@map("r_city")
+}
+
+// R_会場テーブル
+model RVenue {
+  id            Int      @id @default(autoincrement())
+  countryId     Int      @map("country_id")
+  cityId        Int      @map("city_id")
+  name          String   
+  japanaseName  String   @map("japanese_name")
+  address       String
+  capacity      Int
+  imageUrl      String   @map("image_url")
+
+  // Relation
+  rCountry  RCountry @relation(fields: [countryId], references: [id])
+  rCity     RCity @relation(fields: [cityId], references: [id])
+  rTeam     RTeam?
+
+  @@map("r_venue")
+}
+
+// R_コンペティションテーブル
+model RCompetition {
+  id              Int      @id @default(autoincrement())
+  countryId       Int      @map("country_id")
+  competitionId   Int      @map("competition_id")
+  association     String
+  name            String   
+  japanaseName    String   @map("japanese_name")
+  type            String
+  logoUrl         String   @map("logo_url")
+
+  // Relation
+  rCountry                RCountry @relation(fields: [countryId], references: [id])
+  eCompetitionFollow      ECompetitionFollow[]
+  rTeamCompetitionSeason  RTeamCompetitionSeason[]
+
+  @@map("r_competition")
+}
+
+// R_チームテーブル
+model RTeam {
+  id            Int      @id @default(autoincrement())
+  countryId     Int      @map("country_id")
+  venueId       Int      @unique @map("venue_id")
+  teamId        Int      @map("team_id")
+  name          String   
+  japanaseName  String   @map("japanese_name")
+  code          String
+  founded       Int
+  nationality   Boolean
+  logoUrl       String   @map("logo_url")
+
+  // Relation
+  rCountry                RCountry  @relation(fields: [countryId], references: [id])
+  rVenue                  RVenue    @relation(fields: [venueId], references: [id])
+  rTeamCompetitionSeason  RTeamCompetitionSeason[]
+  eTeamFollow             ETeamFollow[]
+
+  @@map("r_team")
+}
+
+// R_プレイヤーテーブル
+model RPlayer {
+  id                  Int       @id @default(autoincrement())
+  countryId           Int       @map("country_id")
+  playerId            Int       @map("player_id")
+  name                String
+  firstName           String    @map("first_name")
+  lastName            String    @map("last_name")
+  japanasefirstName   String    @map("japanese_first_name")
+  japanaseLastName    String    @map("japanese_last_name")
+  age                 Int
+  birthDate           DateTime  @map("birth_date")
+  height              Int
+  weight              Int
+  photoUrl            String    @map("photo_url")
+
+  // Relation
+  rCountry          RCountry @relation(fields: [countryId], references: [id])
+  ePlayerFollow     EPlayerFollow[]
+  rTeamPlayerSeason RTeamPlayerSeason[]
+
+  @@map("r_player")
+}
+
+// R_シーズンテーブル
+model RSeason {
+  id          Int      @id @default(autoincrement())
+  name        String
+
+  // Relation
+  rTeamCompetitionSeason RTeamCompetitionSeason[]
+  rTeamPlayerSeason      RTeamPlayerSeason[]
+
+  @@map("r_season")
+}
+
+// R_チームコンペティションシーズンテーブル
+model RTeamCompetitionSeason {
+  id              Int      @id @default(autoincrement())
+  teamId          Int      @map("team_id")
+  competitionId   Int      @map("competition_id")
+  seasonId        Int      @map("season_id")
+
+  // Relation
+  rTeam             RTeam         @relation(fields: [teamId], references: [id])
+  rCompetition      RCompetition  @relation(fields: [competitionId], references: [id])
+  rSeason           RSeason       @relation(fields: [seasonId], references: [id])
+  rTeamPlayerSeason RTeamPlayerSeason[]
+
+  @@map("r_team_competition_season")
+}
+
+// R_チームプレイヤーシーズンテーブル
+model RTeamPlayerSeason {
+  id                          Int      @id @default(autoincrement())
+  seasonId                    Int      @map("season_id")
+  playerId                    Int      @map("player_id")
+  teamCompetitionSeasonId     Int      @map("team_competition_season_id")
+
+  // Relation
+  rTeamCompetitionSeason  RTeamCompetitionSeason @relation(fields: [teamCompetitionSeasonId], references: [id])
+  rPlayer                 RPlayer @relation(fields: [playerId], references: [id])
+  rSeason                 RSeason @relation(fields: [seasonId], references: [id])
+
+  @@map("r_team_player_season")
+}
+
+// E_ユーザー作成テーブル
+model EUserCreate {
+  id          String    @id @default(cuid())
+  userId      String    @unique @map("user_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  // Relation
+  createdUser RUser @relation(fields: [userId], references: [id])
+
+  @@map("e_user_create")
+}
+
+// E_ユーザー更新テーブル
+model EUserUpdate {
+  id          String    @id @default(cuid())
+  userId      String    @unique @map("user_id")
+  email       String    @unique
+  password    String
+  firstName   String    @map("first_name")
+  lastName    String    @map("last_name")
+  gender      Gender
+  age         Int
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  // Relation
+  updatedUser RUser @relation(fields: [userId], references: [id])
+
+  @@map("e_user_update")
+}
+
+// E_ユーザー削除テーブル
+model EUserDelete {
+  id          String    @id @default(cuid())
+  userId      String    @unique @map("user_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  // Relation
+  deletedUser RUser @relation(fields: [userId], references: [id])
+
+  @@map("e_user_delete")
+}
+
+// E_コンペティションフォローテーブル
+model ECompetitionFollow {
+  id              String    @id @default(cuid())
+  userId          String    @map("user_id")
+  competitionId   Int       @map("competition_id")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  // Relation
+  rUser                 RUser         @relation(fields: [userId], references: [id])
+  rCompetition          RCompetition  @relation(fields: [competitionId], references: [id])
+  eCompetitionUnfollow  ECompetitionUnfollow?
+
+  @@map("e_competition_follow")
+}
+
+// E_コンペティションアンフォローテーブル
+model ECompetitionUnfollow {
+  id                    String    @id @default(cuid())
+  competitionFollowId   String    @unique @map("competition_follow_id")
+  createdAt             DateTime  @default(now()) @map("created_at")
+
+  // Relation
+  eCompetitionFollow  ECompetitionFollow @relation(fields: [competitionFollowId], references: [id])
+
+  @@map("e_competition_unfollow")
+}
+
+// E_チームフォローテーブル
+model ETeamFollow {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  teamId      Int       @map("team_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  // Relation
+  rUser           RUser  @relation(fields: [userId], references: [id])
+  rTeam           RTeam  @relation(fields: [teamId], references: [id])
+  eTeamUnfollow   ETeamUnfollow?
+
+  @@map("e_team_follow")
+}
+
+// E_チームアンフォローテーブル
+model ETeamUnfollow {
+  id              String    @id @default(cuid())
+  teamFollowId    String    @unique @map("team_follow_id")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  // Relation
+  eTeamFollow  ETeamFollow @relation(fields: [teamFollowId], references: [id])
+
+  @@map("e_team_unfollow")
+}
+
+// E_プレイヤーフォローテーブル
+model EPlayerFollow {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  playerId    Int       @map("player_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  // Relation
+  rUser           RUser  @relation(fields: [userId], references: [id])
+  rPlayer         RPlayer  @relation(fields: [playerId], references: [id])
+  ePlayerUnfollow EPlayerUnfollow?
+
+  @@map("e_player_follow")
+}
+
+// E_プレイヤーアンフォローテーブル
+model EPlayerUnfollow {
+  id              String    @id @default(cuid())
+  playerFollowId  String    @unique @map("player_follow_id")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  // Relation
+  ePlayerFollow  EPlayerFollow @relation(fields: [playerFollowId], references: [id])
+
+  @@map("e_player_unfollow")
 }
