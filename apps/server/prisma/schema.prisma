@@ -11,7 +11,7 @@ datasource db {
 
 // 性別
 enum Gender {
-  MELE // 男性
+  MALE // 男性
   FEMALE // 女性
   OTHER // その他
 
@@ -41,11 +41,11 @@ model RUser {
 
 // R_国テーブル
 model RCountry {
-  id            Int      @id @default(autoincrement())
+  id            String    @id @default(cuid())
   name          String   
-  japanaseName  String   @map("japanese_name")
-  code          String   
-  flag_url      String   @map("flag_url")
+  japaneseName  String    @map("japanese_name")
+  code          String?   
+  flagUrl       String?   @map("flag_url")
 
   // Relation
   rCity         RCity[]
@@ -59,10 +59,10 @@ model RCountry {
 
 // R_市町村テーブル
 model RCity {
-  id            Int      @id @default(autoincrement())
-  countryId     Int      @map("country_id")
+  id            String    @id @default(cuid())
+  countryId     String    @map("country_id")
   name          String   
-  japanaseName  String   @map("japanese_name")
+  japaneseName  String    @map("japanese_name")
 
   // Relation
   rCountry  RCountry @relation(fields: [countryId], references: [id])
@@ -73,14 +73,14 @@ model RCity {
 
 // R_会場テーブル
 model RVenue {
-  id            Int      @id @default(autoincrement())
-  countryId     Int      @map("country_id")
-  cityId        Int      @map("city_id")
+  id            String    @id @default(cuid())
+  countryId     String    @map("country_id")
+  cityId        String    @map("city_id")
   name          String   
-  japanaseName  String   @map("japanese_name")
+  japaneseName  String    @map("japanese_name")
   address       String
   capacity      Int
-  imageUrl      String   @map("image_url")
+  imageUrl      String    @map("image_url")
 
   // Relation
   rCountry  RCountry @relation(fields: [countryId], references: [id])
@@ -92,14 +92,14 @@ model RVenue {
 
 // R_コンペティションテーブル
 model RCompetition {
-  id              Int      @id @default(autoincrement())
-  countryId       Int      @map("country_id")
-  competitionId   Int      @map("competition_id")
+  id              String    @id @default(cuid())
+  countryId       String    @map("country_id")
+  competitionId   Int       @map("competition_id")
   association     String
   name            String   
-  japanaseName    String   @map("japanese_name")
+  japaneseName    String    @map("japanese_name")
   type            String
-  logoUrl         String   @map("logo_url")
+  logoUrl         String    @map("logo_url")
 
   // Relation
   rCountry                RCountry @relation(fields: [countryId], references: [id])
@@ -111,16 +111,16 @@ model RCompetition {
 
 // R_チームテーブル
 model RTeam {
-  id            Int      @id @default(autoincrement())
-  countryId     Int      @map("country_id")
-  venueId       Int      @unique @map("venue_id")
-  teamId        Int      @map("team_id")
+  id            String    @id @default(cuid())
+  countryId     String    @map("country_id")
+  venueId       String    @unique @map("venue_id")
+  teamId        Int       @map("team_id")
   name          String   
-  japanaseName  String   @map("japanese_name")
+  japaneseName  String    @map("japanese_name")
   code          String
   founded       Int
   nationality   Boolean
-  logoUrl       String   @map("logo_url")
+  logoUrl       String    @map("logo_url")
 
   // Relation
   rCountry                RCountry  @relation(fields: [countryId], references: [id])
@@ -133,14 +133,14 @@ model RTeam {
 
 // R_プレイヤーテーブル
 model RPlayer {
-  id                  Int       @id @default(autoincrement())
-  countryId           Int       @map("country_id")
+  id                  String    @id @default(cuid())
+  countryId           String    @map("country_id")
   playerId            Int       @map("player_id")
   name                String
   firstName           String    @map("first_name")
   lastName            String    @map("last_name")
-  japanasefirstName   String    @map("japanese_first_name")
-  japanaseLastName    String    @map("japanese_last_name")
+  japanesefirstName   String    @map("japanese_first_name")
+  japaneseLastName    String    @map("japanese_last_name")
   age                 Int
   birthDate           DateTime  @map("birth_date")
   height              Int
@@ -157,8 +157,8 @@ model RPlayer {
 
 // R_シーズンテーブル
 model RSeason {
-  id          Int      @id @default(autoincrement())
-  name        String
+  id      String    @id @default(cuid())
+  name    String
 
   // Relation
   rTeamCompetitionSeason RTeamCompetitionSeason[]
@@ -169,10 +169,10 @@ model RSeason {
 
 // R_チームコンペティションシーズンテーブル
 model RTeamCompetitionSeason {
-  id              Int      @id @default(autoincrement())
-  teamId          Int      @map("team_id")
-  competitionId   Int      @map("competition_id")
-  seasonId        Int      @map("season_id")
+  id              String    @id @default(cuid())
+  teamId          String    @map("team_id")
+  competitionId   String    @map("competition_id")
+  seasonId        String    @map("season_id")
 
   // Relation
   rTeam             RTeam         @relation(fields: [teamId], references: [id])
@@ -185,10 +185,10 @@ model RTeamCompetitionSeason {
 
 // R_チームプレイヤーシーズンテーブル
 model RTeamPlayerSeason {
-  id                          Int      @id @default(autoincrement())
-  seasonId                    Int      @map("season_id")
-  playerId                    Int      @map("player_id")
-  teamCompetitionSeasonId     Int      @map("team_competition_season_id")
+  id                          String    @id @default(cuid())
+  seasonId                    String    @map("season_id")
+  playerId                    String    @map("player_id")
+  teamCompetitionSeasonId     String    @map("team_competition_season_id")
 
   // Relation
   rTeamCompetitionSeason  RTeamCompetitionSeason @relation(fields: [teamCompetitionSeasonId], references: [id])
@@ -244,7 +244,7 @@ model EUserDelete {
 model ECompetitionFollow {
   id              String    @id @default(cuid())
   userId          String    @map("user_id")
-  competitionId   Int       @map("competition_id")
+  competitionId   String    @map("competition_id")
   createdAt       DateTime  @default(now()) @map("created_at")
 
   // Relation
@@ -271,7 +271,7 @@ model ECompetitionUnfollow {
 model ETeamFollow {
   id          String    @id @default(cuid())
   userId      String    @map("user_id")
-  teamId      Int       @map("team_id")
+  teamId      String    @map("team_id")
   createdAt   DateTime  @default(now()) @map("created_at")
 
   // Relation
@@ -298,7 +298,7 @@ model ETeamUnfollow {
 model EPlayerFollow {
   id          String    @id @default(cuid())
   userId      String    @map("user_id")
-  playerId    Int       @map("player_id")
+  playerId    String    @map("player_id")
   createdAt   DateTime  @default(now()) @map("created_at")
 
   // Relation
