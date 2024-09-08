@@ -20,7 +20,7 @@ export const venue = async (prisma: Prisma.TransactionClient) => {
             japaneseName: venue[3],
             address: venue[4],
             capacity: parseInt(venue[5]),
-            imageUri: venue[6],
+            imageUrl: venue[6],
         }
     });
 
