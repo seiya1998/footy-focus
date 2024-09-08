@@ -73,14 +73,14 @@ model RCity {
 
 // R_会場テーブル
 model RVenue {
-  id            String    @id @default(cuid())
-  countryId     String    @map("country_id")
-  cityId        String    @map("city_id")
-  name          String   
-  japaneseName  String    @map("japanese_name")
-  address       String
-  capacity      Int
-  imageUrl      String    @map("image_url")
+  id                String    @id @default(cuid())
+  countryId         String    @map("country_id")
+  cityId            String    @map("city_id")
+  name              String   
+  japaneseName      String    @map("japanese_name")
+  address           String?
+  capacity          Int
+  imageUrl          String    @map("image_url")
 
   // Relation
   rCountry  RCountry @relation(fields: [countryId], references: [id])
@@ -92,14 +92,14 @@ model RVenue {
 
 // R_コンペティションテーブル
 model RCompetition {
-  id              String    @id @default(cuid())
-  countryId       String    @map("country_id")
-  competitionId   Int       @map("competition_id")
+  id              String      @id @default(cuid())
+  countryId       String      @map("country_id")
+  competitionId   Int         @map("competition_id")
   association     String
   name            String   
-  japaneseName    String    @map("japanese_name")
+  japaneseName    String      @map("japanese_name")
   type            String
-  logoUrl         String    @map("logo_url")
+  logoUrl         String?     @map("logo_url")
 
   // Relation
   rCountry                RCountry @relation(fields: [countryId], references: [id])
@@ -133,19 +133,17 @@ model RTeam {
 
 // R_プレイヤーテーブル
 model RPlayer {
-  id                  String    @id @default(cuid())
-  countryId           String    @map("country_id")
-  playerId            Int       @map("player_id")
+  id                  String      @id @default(cuid())
+  countryId           String      @map("country_id")
+  playerId            Int         @map("player_id")
   name                String
-  firstName           String    @map("first_name")
-  lastName            String    @map("last_name")
-  japanesefirstName   String    @map("japanese_first_name")
-  japaneseLastName    String    @map("japanese_last_name")
-  age                 Int
-  birthDate           DateTime  @map("birth_date")
-  height              Int
-  weight              Int
-  photoUrl            String    @map("photo_url")
+  firstName           String?     @map("first_name")
+  lastName            String?     @map("last_name")
+  age                 Int?
+  birthDate           DateTime?   @map("birth_date")
+  height              Int?
+  weight              Int?
+  photoUrl            String      @map("photo_url")
 
   // Relation
   rCountry          RCountry @relation(fields: [countryId], references: [id])

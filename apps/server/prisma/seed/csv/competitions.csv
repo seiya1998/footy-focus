@@ -1,0 +1,81 @@
+country,competition_id,association,name,japanese_name,type,logo_url
+World,1,FIFA,World Cup,ワールドカップ,Cup,https://media.api-sports.io/football/leagues/1.png
+World,2,UEFA,UEFA Champions League,UEFAチャンピオンズリーグ,Cup,https://media.api-sports.io/football/leagues/2.png
+World,3,UEFA,UEFA Europa League,UEFAヨーロッパリーグ,Cup,https://media.api-sports.io/football/leagues/3.png
+World,4,UEFA,Euro Championship,ユーロ選手権,Cup,https://media.api-sports.io/football/leagues/4.png
+World,5,UEFA,UEFA Nations League,UEFAネーションズリーグ,Cup,https://media.api-sports.io/football/leagues/5.png
+World,6,CAF,Africa Cup of Nations,アフリカネイションズカップ,Cup,https://media.api-sports.io/football/leagues/6.png
+World,7,AFC,Asian Cup,AFCアジアカップ,Cup,https://media.api-sports.io/football/leagues/7.png
+World,9,CONMEBOL,Copa America,コパ・アメリカ,Cup,https://media.api-sports.io/football/leagues/9.png
+World,10,FIFA,Friendlies,親善試合,Cup,https://media.api-sports.io/football/leagues/10.png
+World,13,CONMEBOL,CONMEBOL Libertadores,CONMEBOLリベルタドーレス,Cup,https://media.api-sports.io/football/leagues/13.png
+World,15,FIFA,FIFA Club World Cup,FIFAクラブワールドカップ,League,https://media.api-sports.io/football/leagues/15.png
+World,17,AFC,AFC Champions League,AFCチャンピオンズリーグ,Cup,https://media.api-sports.io/football/leagues/17.png
+England,39,FA,Premier League,プレミアリーグ,League,https://media.api-sports.io/football/leagues/39.png
+England,40,FA,Championship,EFLチャンピオンシップ,League,https://media.api-sports.io/football/leagues/40.png
+England,41,FA,League One,EFLリーグ1,League,https://media.api-sports.io/football/leagues/41.png
+England,45,FA,FA Cup,FAカップ,Cup,https://media.api-sports.io/football/leagues/45.png
+England,48,FA,League Cup,カラバオカップ,Cup,https://media.api-sports.io/football/leagues/48.png
+France,61,FFF,Ligue 1,リーグ・アン,League,https://media.api-sports.io/football/leagues/61.png
+France,62,FFF,Ligue 2,リーグ・ドゥ,League,https://media.api-sports.io/football/leagues/62.png
+France,66,FFF,Coupe de France,クープ・ドゥ・フランス,Cup,https://media.api-sports.io/football/leagues/66.png
+Brazil,71,CBF,Serie A,セリエA,League,https://media.api-sports.io/football/leagues/71.png
+Brazil,73,CBF,Copa Do Brasil,コパ・ド・ブラジル,Cup,https://media.api-sports.io/football/leagues/73.png
+Germany,78,DFB,Bundesliga,ブンデスリーガ,League,https://media.api-sports.io/football/leagues/78.png
+Germany,79,DFB,2. Bundesliga,2. ブンデスリーガ,League,https://media.api-sports.io/football/leagues/79.png
+Germany,80,DFB,3. Liga,3. リーガ,League,https://media.api-sports.io/football/leagues/80.png
+Germany,81,DFB,DFB Pokal,DFBポカール,Cup,https://media.api-sports.io/football/leagues/81.png
+Netherlands,88,KNVB,Eredivisie,エールディビジ,League,https://media.api-sports.io/football/leagues/88.png
+Portugal,94,FPF,Primeira Liga,プリメイラ・リーガ,League,https://media.api-sports.io/football/leagues/94.png
+Japan,98,JFA,J1 League,J1リーグ,League,https://media.api-sports.io/football/leagues/98.png
+Japan,99,JFA,J2 League,J2リーグ,League,https://media.api-sports.io/football/leagues/99.png
+Japan,100,JFA,J3 League,J3リーグ,League,https://media.api-sports.io/football/leagues/100.png
+Japan,101,JFA,J-League Cup,JリーグYBCルヴァンカップ,Cup,https://media.api-sports.io/football/leagues/101.png
+Japan,102,JFA,Emperor Cup,天皇杯,Cup,https://media.api-sports.io/football/leagues/102.png
+Poland,106,PZPN,Ekstraklasa,エクストラクラサ,League,https://media.api-sports.io/football/leagues/106.png
+Poland,107,PZPN,I Liga,I リーガ,League,https://media.api-sports.io/football/leagues/107.png
+Denmark,119,DBU,Superliga,スーペルリーガ,League,https://media.api-sports.io/football/leagues/119.png
+Argentina,128,AFA,Liga Profesional Argentina,アルゼンチンプロリーグ,League,https://media.api-sports.io/football/leagues/128.png
+Italy,135,FIGC,Serie A,セリエA,League,https://media.api-sports.io/football/leagues/135.png
+Italy,136,FIGC,Serie B,セリエB,League,https://media.api-sports.io/football/leagues/136.png
+Italy,137,FIGC,Coppa Italia,コッパ・イタリア,Cup,https://media.api-sports.io/football/leagues/137.png
+Spain,140,RFEF,La Liga,ラ・リーガ,League,https://media.api-sports.io/football/leagues/140.png
+Spain,141,RFEF,Segunda División,セグンダ・ディビシオン,League,https://media.api-sports.io/football/leagues/141.png
+Spain,143,RFEF,Copa del Rey,コパ・デル・レイ,Cup,https://media.api-sports.io/football/leagues/143.png
+Belgium,144,KBFV,Jupiler Pro League,ジュピラープロリーグ,League,https://media.api-sports.io/football/leagues/144.png
+China,169,CFA,Super League,スーパーリーグ,League,https://media.api-sports.io/football/leagues/169.png
+Scotland,179,SFA,Premiership,プレミアシップ,League,https://media.api-sports.io/football/leagues/179.png
+Australia,188,APL,A-League,Aリーグ,League,https://media.api-sports.io/football/leagues/188.png
+Greece,197,HFF,Super League 1,スーパーリーグ1,League,https://media.api-sports.io/football/leagues/197.png
+Turkey,203,TFF,Süper Lig,スーパーリーグ,League,https://media.api-sports.io/football/leagues/203.png
+Switzerland,207,SFV,Super League,スーパーリーグ,League,https://media.api-sports.io/football/leagues/207.png
+Croatia,210,HNS,HNL,プルヴァHNL,League,https://media.api-sports.io/football/leagues/210.png
+Austria,218,ÖFB,Bundesliga,ブンデスリーガ,League,https://media.api-sports.io/football/leagues/218.png
+Russia,235,RFU,Premier League,プレミアリーグ,League,https://media.api-sports.io/football/leagues/235.png
+USA,253,USSF,Major League Soccer,メジャーリーグサッカー,League,https://media.api-sports.io/football/leagues/253.png
+USA,254,USSF,NWSL Women,ナショナル・ウィメンズ・サッカーリーグ,League,https://media.api-sports.io/football/leagues/254.png
+Mexico,262,FMF,Liga MX,リーガMX,League,https://media.api-sports.io/football/leagues/262.png
+South-Korea,292,KFA,K League 1,Kリーグ1,League,https://media.api-sports.io/football/leagues/292.png
+United-Arab-Emirates,301,UAEFA,Pro League,プロリーグ,League,https://media.api-sports.io/football/leagues/301.png
+Qatar,305,QFA,Stars League,スターズリーグ,League,https://media.api-sports.io/football/leagues/305.png
+Saudi-Arabia,307,SAFF,Pro League,プロリーグ,League,https://media.api-sports.io/football/leagues/307.png
+World,480,IOC,Olympics Men,オリンピック男子,Cup,https://media.api-sports.io/football/leagues/480.png
+Japan,497,JFA,Japan Football League,日本フットボールリーグ,League,https://media.api-sports.io/football/leagues/497.png
+World,524,IOC,Olympics Women,オリンピック女子,Cup,https://media.api-sports.io/football/leagues/524.png
+World,525,UEFA,UEFA Champions League Women,UEFAチャンピオンズリーグ女子,Cup,https://media.api-sports.io/football/leagues/525.png
+France,526,FFF,Trophée des Champions,トロフェ・デ・チャンピオン,Cup,https://media.api-sports.io/football/leagues/526.png
+England,528,FA,Community Shield,FAコミュニティシールド,Cup,https://media.api-sports.io/football/leagues/528.png
+Germany,529,DFB,Super Cup,スーパーカップ,Cup,https://media.api-sports.io/football/leagues/529.png
+World,531,UEFA,UEFA Super Cup,UEFAスーパーカップ,Cup,https://media.api-sports.io/football/leagues/531.png
+World,536,CONCACAF,CONCACAF Nations League,CONCACAFネーションズリーグ,Cup,https://media.api-sports.io/football/leagues/536.png
+Italy,547,FIGC,Super Cup,スーパーカップ,Cup,https://media.api-sports.io/football/leagues/547.png
+Japan,548,JFA,Super Cup,FUJIFILM SUPER CUP,Cup,https://media.api-sports.io/football/leagues/548.png
+Spain,556,RFEF,Super Cup,スーパーカップ,Cup,https://media.api-sports.io/football/leagues/556.png
+World,666,FIFA,Friendlies Women,親善試合女子,Cup,https://media.api-sports.io/football/leagues/666.png
+World,667,FIFA,Friendlies Clubs,親善クラブ,Cup,https://media.api-sports.io/football/leagues/667.png
+England,698,FA,FA Women's Cup,FA女子カップ,Cup,https://media.api-sports.io/football/leagues/698.png
+England,699,FA,Women's Championship,女子選手権,League,https://media.api-sports.io/football/leagues/699.png
+World,848,UEFA,UEFA Europa Conference League,UEFAヨーロッパカンファレンスリーグ,Cup,https://media.api-sports.io/football/leagues/848.png
+Japan,854,JFA,WE League,WEリーグ,League,https://media.api-sports.io/football/leagues/854.png
+England,871,FA,Premier League Cup,EFLカップ,Cup,https://media.api-sports.io/football/leagues/871.png
+England,1022,FA,Premier League - Summer Series,プレミアリーグ - サマーシリーズ,League,https://media.api-sports.io/football/leagues/1022.png

@@ -6,10 +6,10 @@ export const country = async (prisma: Prisma.TransactionClient) => {
     await prisma.rCountry.createMany({
         data: countries.map((country: string[]) => {
             return {
-                name: country[1],
-                japaneseName: country[2],
-                code: country[3],
-                flagUrl: country[4],
+                name: country[0],
+                japaneseName: country[1],
+                code: country[2],
+                flagUrl: country[3],
             }
         })
     })
