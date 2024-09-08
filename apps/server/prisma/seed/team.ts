@@ -16,7 +16,7 @@ export const team = async (prisma: Prisma.TransactionClient) => {
         return {
             countryId: countryMap.get(team[0]),
             venueId: venueMap.get(team[1]),
-            teamId: team[2],
+            teamId: Number(team[2]),
             name: team[3],
             japaneseName: team[4],
             code: team[5],
@@ -28,7 +28,7 @@ export const team = async (prisma: Prisma.TransactionClient) => {
 
     // バルクインサート
     for (let i = 0; i < teamData.length; i += BATCH_SIZE) {
-        await prisma.rVenue.createMany({
+        await prisma.rTeam.createMany({
             data: teamData.slice(i, i + BATCH_SIZE)
         });
     }

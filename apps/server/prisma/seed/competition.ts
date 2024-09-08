@@ -12,7 +12,7 @@ export const competition = async (prisma: Prisma.TransactionClient) => {
         data: competitions.map((competition: string[]) => {
             return {
                 countryId: countryMap.get(competition[0]),
-                competitionId: competition[1],
+                competitionId: Number(competition[1]),
                 association: competition[2],
                 name: competition[3],
                 japaneseName: competition[4],

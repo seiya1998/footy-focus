@@ -15,18 +15,18 @@ export const teamCompetitionSeason = async (prisma: Prisma.TransactionClient) =>
     const seasonMap = await generateSeasonMap(prisma);
     const teamMap = await generateTeamMap(prisma);
 
-    const playerData = teamCompetitionSeasons.map((team: string[]) => {
+    const teamData = teamCompetitionSeasons.map((team: string[]) => {
         return {
             seasonId: seasonMap.get(team[0]),
             teamId: teamMap.get(Number(team[1])),
-            competitionId: team[2],
+            competitionId: (team[2]),
         }
     });
 
     // バルクインサート
-    for (let i = 0; i < playerData.length; i += BATCH_SIZE) {
-        await prisma.rPlayer.createMany({
-            data: playerData.slice(i, i + BATCH_SIZE)
+    for (let i = 0; i < teamData.length; i += BATCH_SIZE) {
+        await prisma.rTeamCompetitionSeason.createMany({
+            data: teamData.slice(i, i + BATCH_SIZE)
         });
     }
 }

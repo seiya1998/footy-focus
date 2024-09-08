@@ -14,7 +14,7 @@ export const player = async (prisma: Prisma.TransactionClient) => {
     const playerData = players.map((player: string[]) => {
         return {
             countryId: countryMap.get(player[0]),
-            playerId: player[1],
+            playerId: Number(player[1]),
             name: player[2],
             firstName: player[3],
             lastName: player[5],
