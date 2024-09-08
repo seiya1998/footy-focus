@@ -119,7 +119,7 @@ model RTeam {
   japaneseName  String    @map("japanese_name")
   code          String
   founded       Int
-  nationality   Boolean
+  national      Boolean
   logoUrl       String    @map("logo_url")
 
   // Relation
