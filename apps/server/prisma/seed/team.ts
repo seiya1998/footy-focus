@@ -20,7 +20,7 @@ export const team = async (prisma: Prisma.TransactionClient) => {
             name: team[3],
             japaneseName: team[4],
             code: team[5],
-            founded: team[6],
+            founded: Number(team[6]),
             national: parseInt(team[7]),
             logoUrl: team[8],
         }
