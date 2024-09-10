@@ -48,44 +48,27 @@ model RCountry {
   flagUrl       String?   @map("flag_url")
 
   // Relation
-  rCity         RCity[]
   rVenue        RVenue[]
   rTeam         RTeam[]
   rCompetition  RCompetition[]
-  rPlayer       RPlayer[]
 
   @@map("r_country")
-}
-
-// R_市町村テーブル
-model RCity {
-  id            String    @id @default(cuid())
-  countryId     String    @map("country_id")
-  name          String   
-  japaneseName  String    @map("japanese_name")
-
-  // Relation
-  rCountry  RCountry @relation(fields: [countryId], references: [id])
-  rVenue    RVenue[]
-
-  @@map("r_city")
 }
 
 // R_会場テーブル
 model RVenue {
   id                String    @id @default(cuid())
   countryId         String    @map("country_id")
-  cityId            String    @map("city_id")
+  city              String
   name              String   
   japaneseName      String    @map("japanese_name")
   address           String?
-  capacity          Int
+  capacity          Int?
   imageUrl          String    @map("image_url")
 
   // Relation
-  rCountry  RCountry @relation(fields: [countryId], references: [id])
-  rCity     RCity @relation(fields: [cityId], references: [id])
-  rTeam     RTeam?
+  rCountry  RCountry  @relation(fields: [countryId], references: [id])
+  rTeam     RTeam[]
 
   @@map("r_venue")
 }
@@ -113,7 +96,7 @@ model RCompetition {
 model RTeam {
   id            String    @id @default(cuid())
   countryId     String    @map("country_id")
-  venueId       String    @unique @map("venue_id")
+  venueId       String?   @map("venue_id")
   teamId        Int       @map("team_id")
   name          String   
   japaneseName  String    @map("japanese_name")
@@ -123,8 +106,8 @@ model RTeam {
   logoUrl       String    @map("logo_url")
 
   // Relation
-  rCountry                RCountry  @relation(fields: [countryId], references: [id])
-  rVenue                  RVenue    @relation(fields: [venueId], references: [id])
+  rCountry                RCountry    @relation(fields: [countryId], references: [id])
+  rVenue                  RVenue?     @relation(fields: [venueId], references: [id])
   rTeamCompetitionSeason  RTeamCompetitionSeason[]
   eTeamFollow             ETeamFollow[]
 
@@ -133,20 +116,20 @@ model RTeam {
 
 // R_プレイヤーテーブル
 model RPlayer {
-  id                  String      @id @default(cuid())
-  countryId           String      @map("country_id")
-  playerId            Int         @map("player_id")
-  name                String
-  firstName           String?     @map("first_name")
-  lastName            String?     @map("last_name")
-  age                 Int?
-  birthDate           DateTime?   @map("birth_date")
-  height              Int?
-  weight              Int?
-  photoUrl            String      @map("photo_url")
+  id                      String      @id @default(cuid())
+  playerId                Int         @map("player_id")
+  name                    String
+  firstName               String?     @map("first_name")
+  lastName                String?     @map("last_name")
+  age                     Int?
+  nationality             String?
+  nationalityJapanese     String?     @map("nationality_japanese")
+  birthDate               DateTime?   @map("birth_date")
+  height                  String?
+  weight                  String?
+  photoUrl                String      @map("photo_url")
 
   // Relation
-  rCountry          RCountry @relation(fields: [countryId], references: [id])
   ePlayerFollow     EPlayerFollow[]
   rTeamPlayerSeason RTeamPlayerSeason[]
 

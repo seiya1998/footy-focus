@@ -5,7 +5,7 @@ CREATE TABLE `r_user` (
     `password` VARCHAR(191) NOT NULL,
     `first_name` VARCHAR(191) NOT NULL,
     `last_name` VARCHAR(191) NOT NULL,
-    `gender` ENUM('MELE', 'FEMALE', 'OTHER') NOT NULL,
+    `gender` ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,
     `age` INTEGER NOT NULL,
 
     UNIQUE INDEX `r_user_email_key`(`email`),
@@ -14,34 +14,24 @@ CREATE TABLE `r_user` (
 
 -- CreateTable
 CREATE TABLE `r_country` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `japanese_name` VARCHAR(191) NOT NULL,
-    `code` VARCHAR(191) NOT NULL,
-    `flag_url` VARCHAR(191) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `r_city` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `country_id` INTEGER NOT NULL,
-    `name` VARCHAR(191) NOT NULL,
-    `japanese_name` VARCHAR(191) NOT NULL,
+    `code` VARCHAR(191) NULL,
+    `flag_url` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `r_venue` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `country_id` INTEGER NOT NULL,
-    `city_id` INTEGER NOT NULL,
+    `id` VARCHAR(191) NOT NULL,
+    `country_id` VARCHAR(191) NOT NULL,
+    `city` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `japanese_name` VARCHAR(191) NOT NULL,
-    `address` VARCHAR(191) NOT NULL,
-    `capacity` INTEGER NOT NULL,
+    `address` VARCHAR(191) NULL,
+    `capacity` INTEGER NULL,
     `image_url` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -49,49 +39,47 @@ CREATE TABLE `r_venue` (
 
 -- CreateTable
 CREATE TABLE `r_competition` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `country_id` INTEGER NOT NULL,
+    `id` VARCHAR(191) NOT NULL,
+    `country_id` VARCHAR(191) NOT NULL,
     `competition_id` INTEGER NOT NULL,
     `association` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `japanese_name` VARCHAR(191) NOT NULL,
     `type` VARCHAR(191) NOT NULL,
-    `logo_url` VARCHAR(191) NOT NULL,
+    `logo_url` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `r_team` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `country_id` INTEGER NOT NULL,
-    `venue_id` INTEGER NOT NULL,
+    `id` VARCHAR(191) NOT NULL,
+    `country_id` VARCHAR(191) NOT NULL,
+    `venue_id` VARCHAR(191) NULL,
     `team_id` INTEGER NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `japanese_name` VARCHAR(191) NOT NULL,
     `code` VARCHAR(191) NOT NULL,
     `founded` INTEGER NOT NULL,
-    `nationality` BOOLEAN NOT NULL,
+    `national` BOOLEAN NOT NULL,
     `logo_url` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `r_team_venue_id_key`(`venue_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `r_player` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `country_id` INTEGER NOT NULL,
+    `id` VARCHAR(191) NOT NULL,
     `player_id` INTEGER NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `first_name` VARCHAR(191) NOT NULL,
-    `last_name` VARCHAR(191) NOT NULL,
-    `japanese_first_name` VARCHAR(191) NOT NULL,
-    `japanese_last_name` VARCHAR(191) NOT NULL,
-    `age` INTEGER NOT NULL,
-    `birth_date` DATETIME(3) NOT NULL,
-    `height` INTEGER NOT NULL,
-    `weight` INTEGER NOT NULL,
+    `first_name` VARCHAR(191) NULL,
+    `last_name` VARCHAR(191) NULL,
+    `age` INTEGER NULL,
+    `nationality` VARCHAR(191) NULL,
+    `nationality_japanese` VARCHAR(191) NULL,
+    `birth_date` DATETIME(3) NULL,
+    `height` VARCHAR(191) NULL,
+    `weight` VARCHAR(191) NULL,
     `photo_url` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -99,7 +87,7 @@ CREATE TABLE `r_player` (
 
 -- CreateTable
 CREATE TABLE `r_season` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -107,20 +95,20 @@ CREATE TABLE `r_season` (
 
 -- CreateTable
 CREATE TABLE `r_team_competition_season` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `team_id` INTEGER NOT NULL,
-    `competition_id` INTEGER NOT NULL,
-    `season_id` INTEGER NOT NULL,
+    `id` VARCHAR(191) NOT NULL,
+    `team_id` VARCHAR(191) NOT NULL,
+    `competition_id` VARCHAR(191) NOT NULL,
+    `season_id` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `r_team_player_season` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `season_id` INTEGER NOT NULL,
-    `player_id` INTEGER NOT NULL,
-    `team_competition_season_id` INTEGER NOT NULL,
+    `id` VARCHAR(191) NOT NULL,
+    `season_id` VARCHAR(191) NOT NULL,
+    `player_id` VARCHAR(191) NOT NULL,
+    `team_competition_season_id` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -143,7 +131,7 @@ CREATE TABLE `e_user_update` (
     `password` VARCHAR(191) NOT NULL,
     `first_name` VARCHAR(191) NOT NULL,
     `last_name` VARCHAR(191) NOT NULL,
-    `gender` ENUM('MELE', 'FEMALE', 'OTHER') NOT NULL,
+    `gender` ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,
     `age` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
@@ -166,7 +154,7 @@ CREATE TABLE `e_user_delete` (
 CREATE TABLE `e_competition_follow` (
     `id` VARCHAR(191) NOT NULL,
     `user_id` VARCHAR(191) NOT NULL,
-    `competition_id` INTEGER NOT NULL,
+    `competition_id` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
@@ -186,7 +174,7 @@ CREATE TABLE `e_competition_unfollow` (
 CREATE TABLE `e_team_follow` (
     `id` VARCHAR(191) NOT NULL,
     `user_id` VARCHAR(191) NOT NULL,
-    `team_id` INTEGER NOT NULL,
+    `team_id` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
@@ -206,7 +194,7 @@ CREATE TABLE `e_team_unfollow` (
 CREATE TABLE `e_player_follow` (
     `id` VARCHAR(191) NOT NULL,
     `user_id` VARCHAR(191) NOT NULL,
-    `player_id` INTEGER NOT NULL,
+    `player_id` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
@@ -223,13 +211,7 @@ CREATE TABLE `e_player_unfollow` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `r_city` ADD CONSTRAINT `r_city_country_id_fkey` FOREIGN KEY (`country_id`) REFERENCES `r_country`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE `r_venue` ADD CONSTRAINT `r_venue_country_id_fkey` FOREIGN KEY (`country_id`) REFERENCES `r_country`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `r_venue` ADD CONSTRAINT `r_venue_city_id_fkey` FOREIGN KEY (`city_id`) REFERENCES `r_city`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `r_competition` ADD CONSTRAINT `r_competition_country_id_fkey` FOREIGN KEY (`country_id`) REFERENCES `r_country`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -238,10 +220,7 @@ ALTER TABLE `r_competition` ADD CONSTRAINT `r_competition_country_id_fkey` FOREI
 ALTER TABLE `r_team` ADD CONSTRAINT `r_team_country_id_fkey` FOREIGN KEY (`country_id`) REFERENCES `r_country`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `r_team` ADD CONSTRAINT `r_team_venue_id_fkey` FOREIGN KEY (`venue_id`) REFERENCES `r_venue`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `r_player` ADD CONSTRAINT `r_player_country_id_fkey` FOREIGN KEY (`country_id`) REFERENCES `r_country`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `r_team` ADD CONSTRAINT `r_team_venue_id_fkey` FOREIGN KEY (`venue_id`) REFERENCES `r_venue`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `r_team_competition_season` ADD CONSTRAINT `r_team_competition_season_team_id_fkey` FOREIGN KEY (`team_id`) REFERENCES `r_team`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { 
     getCountriesFromDB, 
-    getCitiesFromDB, 
     getVenuesFromDB, 
     getCompetitionsFromDB,
     getSeasonsFromDB,
@@ -18,16 +17,6 @@ export const generateCountryMap = async (prisma: Prisma.TransactionClient) => {
         countryMap.set(country.name, country.id);
     });
     return countryMap;
-}
-
-export const generateCityMap = async (prisma: Prisma.TransactionClient) => {
-    const cities = await getCitiesFromDB(prisma);
-
-    const cityMap = new Map<string, string>();
-    cities.forEach(city => {
-        cityMap.set(city.name, city.id);
-    });
-    return cityMap;
 }
 
 export const generateCompetitionMap = async (prisma: Prisma.TransactionClient) => {

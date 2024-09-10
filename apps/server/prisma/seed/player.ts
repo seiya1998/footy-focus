@@ -1,35 +1,37 @@
 import { Prisma } from '@prisma/client'
 import { getDataFromCsv } from './common/getDataFromCsv';
-import { generateCountryMap } from './common/generateDataMap';
 
 export const player = async (prisma: Prisma.TransactionClient) => {
     // バッチサイズを定義
-    const BATCH_SIZE = 1000;
+    const BATCH_SIZE = 500;
 
     const players = getDataFromCsv('players');
 
-    // バルクインサート用にデータをマップに変換
-    const countryMap = await generateCountryMap(prisma);
-
     const playerData = players.map((player: string[]) => {
         return {
-            countryId: countryMap.get(player[0]),
-            playerId: Number(player[1]),
-            name: player[2],
-            firstName: player[3],
-            lastName: player[5],
-            age: player[7],
-            birthDate: player[8],
-            height: player[9],
-            weight: player[10],
-            photoUrl: player[11],
+            playerId: Number(player[2]),
+            name: player[3],
+            firstName: player[4],
+            lastName: player[6],
+            age: Number(player[8]),
+            nationality: player[0],
+            nationalityJapanese: player[1],
+            birthDate: player[9] ? new Date(`${player[9]}T00:00:00Z`).toISOString() : null,
+            height: player[10],
+            weight: player[11],
+            photoUrl: player[12],
         }
     });
 
-    // バルクインサート
+    // Promise.allを使って並行処理
+    const tasks = [];
     for (let i = 0; i < playerData.length; i += BATCH_SIZE) {
-        await prisma.rPlayer.createMany({
-            data: playerData.slice(i, i + BATCH_SIZE)
-        });
+        tasks.push(
+            prisma.rPlayer.createMany({
+                data: playerData.slice(i, i + BATCH_SIZE),
+            })
+        );
     }
+    
+    await Promise.all(tasks);
 }

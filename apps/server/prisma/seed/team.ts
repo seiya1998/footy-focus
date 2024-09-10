@@ -21,7 +21,7 @@ export const team = async (prisma: Prisma.TransactionClient) => {
             japaneseName: team[4],
             code: team[5],
             founded: Number(team[6]),
-            national: parseInt(team[7]),
+            national: parseInt(team[7]) === 1,
             logoUrl: team[8],
         }
     });
