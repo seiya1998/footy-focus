@@ -1,18 +1,21 @@
 import fastify from 'fastify';
+import fastifyAutoLoad from '@/utils/fastifyAutoLoad';
 
 const PORT = 8080;
 const HOST = '0.0.0.0';
 
 const server = fastify();
 
-server.get('/ping', async (request, reply) => {
-    return 'pong\n'
-})
+const init = async ({ host, port }: { host: string, port: number }) => {
+    await server.register(fastifyAutoLoad);
+    
+    server.listen({ host, port }, (err: Error | null, address: string) => {
+        if (err != null) {
+            console.error(err)
+            process.exit(1)
+        }
+        console.log(`Server listening at ${address}`)
+    })
+}
 
-server.listen(PORT, HOST, (err, address) => {
-    if (err) {
-        console.error(err)
-        process.exit(1)
-    }
-    console.log(`Server listening at ${address}`)
-})
+init({ host: HOST, port: PORT });
