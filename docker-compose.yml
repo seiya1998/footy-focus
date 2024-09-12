@@ -6,13 +6,18 @@ services:
     build:
       context: .
       dockerfile: ./apps/server/Dockerfile
+      args:
+        NPM_TOKEN: ${NPM_TOKEN}
+    volumes:
+      - ./apps/server/src:/app/src
+      - /app/node_modules
     environment:
       - DATABASE_URL=mysql://root:mypassword@mysql-server:3306/mydb
     depends_on:
       mysql-server:
         condition: service_healthy
     ports:
-      - "3001:8080"
+      - '3001:8080'
     networks:
       - local-net
     platform: linux/arm64
@@ -27,14 +32,13 @@ services:
       MYSQL_ROOT_PASSWORD: mypassword
       TZ: 'Asia/Tokyo'
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
       timeout: 20s
-      retries: 30
+      retries: 10
     ports:
-      - "3306:3306"
+      - '3306:3306'
     networks:
       - local-net
-    platform: linux/arm64
 
 networks:
   local-net:
