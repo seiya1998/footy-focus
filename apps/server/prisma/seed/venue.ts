@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { getDataFromCsv } from './common/getDataFromCsv';
-import { generateCountryMap } from './common/generateDataMap';
+import { generateMapFromDB } from './common/generateDataMap';
+import { getCountriesFromDB } from './common/getDataFromDB';
 
 export const venue = async (prisma: Prisma.TransactionClient) => {
     // バッチサイズを定義
@@ -9,7 +10,11 @@ export const venue = async (prisma: Prisma.TransactionClient) => {
     const venues = getDataFromCsv('venues');
 
     // バルクインサート用にデータをマップに変換
-    const countryMap = await generateCountryMap(prisma);
+    const countryMap = await generateMapFromDB(
+        getCountriesFromDB,
+        country => country.name,
+        prisma
+    );
 
     const venueData = venues.map((venue: string[]) => {
         return {

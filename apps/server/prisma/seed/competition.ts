@@ -1,12 +1,17 @@
 import { Prisma } from '@prisma/client'
 import { getDataFromCsv } from './common/getDataFromCsv';
-import { generateCountryMap } from './common/generateDataMap';
+import { generateMapFromDB } from './common/generateDataMap';
+import { getCountriesFromDB } from './common/getDataFromDB';
 
 export const competition = async (prisma: Prisma.TransactionClient) => {
     const competitions = getDataFromCsv('competitions');
 
     // バルクインサート用にデータをマップに変換
-    const countryMap = await generateCountryMap(prisma);
+    const countryMap = await generateMapFromDB(
+        getCountriesFromDB,
+        country => country.name,
+        prisma
+    );
 
     await prisma.rCompetition.createMany({
         data: competitions.map((competition: string[]) => {

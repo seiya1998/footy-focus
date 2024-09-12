@@ -1,10 +1,11 @@
 import { Prisma } from '@prisma/client'
 import { getDataFromCsv } from './common/getDataFromCsv';
+import { generateMapFromDB } from './common/generateDataMap';
 import { 
-    generateSeasonMap, 
-    generateTeamMap,
-    generateCompetitionIdMap
-} from './common/generateDataMap';
+    getSeasonsFromDB,
+    getTeamsFromDB,
+    getCompetitionsFromDB
+} from './common/getDataFromDB';
 
 export const teamCompetitionSeason = async (prisma: Prisma.TransactionClient) => {
     // バッチサイズを定義
@@ -13,9 +14,21 @@ export const teamCompetitionSeason = async (prisma: Prisma.TransactionClient) =>
     const teamCompetitionSeasons = getDataFromCsv('team_competition_seasons');
 
     // バルクインサート用にデータをマップに変換
-    const seasonMap = await generateSeasonMap(prisma);
-    const teamMap = await generateTeamMap(prisma);
-    const competitionMap = await generateCompetitionIdMap(prisma);
+    const seasonMap = await generateMapFromDB(
+        getSeasonsFromDB,
+        season => season.name,
+        prisma
+    );
+    const teamMap = await generateMapFromDB(
+        getTeamsFromDB,
+        team => team.teamId,
+        prisma
+    );
+    const competitionMap = await generateMapFromDB(
+        getCompetitionsFromDB,
+        competition => competition.competitionId,
+        prisma
+    );
 
     const teamData = teamCompetitionSeasons.map((team: string[]) => {
         return {
