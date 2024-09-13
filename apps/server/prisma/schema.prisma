@@ -46,6 +46,7 @@ model RCountry {
   japaneseName  String    @map("japanese_name")
   code          String?   
   flagUrl       String?   @map("flag_url")
+  isMajor       Boolean   @map("is_major")
 
   // Relation
   rVenue        RVenue[]

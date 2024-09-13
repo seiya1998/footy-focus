@@ -10,6 +10,7 @@ export const country = async (prisma: Prisma.TransactionClient) => {
                 japaneseName: country[1],
                 code: country[2],
                 flagUrl: country[3],
+                isMajor: parseInt(country[4]) === 1,
             }
         })
     })
