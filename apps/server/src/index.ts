@@ -1,5 +1,6 @@
-import fastify from 'fastify';
+import helmet from '@fastify/helmet';
 import fastifyAutoLoad from '@/utils/fastifyAutoLoad';
+import fastify from 'fastify';
 
 const PORT = 8080;
 const HOST = '0.0.0.0';
@@ -8,6 +9,11 @@ const server = fastify();
 
 const init = async ({ host, port }: { host: string, port: number }) => {
     await server.register(fastifyAutoLoad);
+
+    await server.register(helmet, {
+        global: true,
+        noSniff: true // X-Content-Type-Options: nosniff を有効にする
+    });
     
     server.listen({ host, port }, (err: Error | null, address: string) => {
         if (err != null) {
