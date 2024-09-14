@@ -20,6 +20,13 @@ export const getCountriesFromDB = async ({
         const countries = await prisma.rCountry.findMany({
             where: { isMajor: true },
             orderBy: { name: 'asc'},
+            select: {
+                id: true,
+                name: true,
+                japaneseName: true,
+                code: true,
+                flagUrl: true
+            }
         });
         // 取得した国一覧を返す
         return { success: true, data: countries };

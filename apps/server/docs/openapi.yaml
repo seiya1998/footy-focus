@@ -25,23 +25,26 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  countries:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        name:
-                          type: string
-                        japaneseName:
-                          type: string
-                        code:
-                          type: string
-                        flagUrl:
-                          type: string
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    japaneseName:
+                      type: string
+                    code:
+                      type: string
+                    flagUrl:
+                      type: string
+                  required:
+                    - id
+                    - name
+                    - japaneseName
+                    - code
+                    - flagUrl
         "400":
           description: Default Response
           content:

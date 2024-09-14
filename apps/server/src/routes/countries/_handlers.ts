@@ -1,10 +1,10 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import { JSONSchema } from 'json-schema-to-ts';
 import { pipe } from 'ramda';
 import { match, P } from 'ts-pattern';
 import { extractParams } from './extractParams';
 import { getCountriesFromDB } from './getCountriesFromDB';
 import { start, bypass, dbMiddleware } from '@/utils';
+import { schemas } from './schema';
 
 export default async function (fastify: FastifyInstance) {
     /* 
@@ -49,62 +49,4 @@ export default async function (fastify: FastifyInstance) {
             )();
         }
     );
-}
-
-const schemas = {
-    /*
-    * GET /countries
-    */
-    get: {
-        querystring: {
-            type: 'object',
-            properties: {
-                id: { type: 'string' },
-            },
-        },
-        response: {
-            200: {
-                type: 'object',
-                properties: {
-                    countries: {
-                        type: 'array',
-                        items: {
-                            type: 'object',
-                            properties: {
-                                id: { type: 'string' },
-                                name: { type: 'string' },
-                                japaneseName: { type: 'string' },
-                                code: { type: 'string' },
-                                flagUrl: { type: 'string' },
-                            }
-                        }
-                    }
-                }
-            } as const satisfies JSONSchema,
-            400: {
-                type: 'object',
-                properties: {
-                    error: { type: 'string' }
-                }
-            } as const satisfies JSONSchema,
-            401: {
-                type: 'object',
-                properties: {
-                    error: { type: 'string' }
-                }
-            } as const satisfies JSONSchema,
-            403: {
-                type: 'object',
-                properties: {
-                    error: { type: 'string' }
-                }
-            } as const satisfies JSONSchema,
-            500: {
-                type: 'object',
-                properties: {
-                    error: { type: 'string' }
-                }
-            } as const satisfies JSONSchema
-        }
-    },
 }
